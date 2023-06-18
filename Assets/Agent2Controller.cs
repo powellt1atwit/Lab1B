@@ -29,17 +29,6 @@ public class Agent2Controller : MonoBehaviour
         Vector3 tDirection = (target.transform.position - transform.position).normalized;
         Vector3 aDirection = (agent1.transform.position - transform.position).normalized;
 
-
-        if (distanceBetweenPlayer <= distanceBetweenTarget && distanceBetweenAgent < agent1DistanceThreshold){
-            currentState = State.ChasePlayer;
-        }
-        else if (distanceBetweenPlayer > distanceBetweenTarget && distanceBetweenAgent < agent1DistanceThreshold){
-            currentState = State.ChaseTarget;
-        }
-        else {
-            currentState = State.Flee;
-        }
-
         if (currentState == State.ChasePlayer){
             transform.position += pDirection * speed * Time.deltaTime;
         }
@@ -48,6 +37,16 @@ public class Agent2Controller : MonoBehaviour
         }
         else if(currentState == State.Flee){
             transform.position -= aDirection * speed * Time.deltaTime;
+        }
+
+        if (distanceBetweenPlayer <= distanceBetweenTarget && distanceBetweenAgent > agent1DistanceThreshold){
+            currentState = State.ChasePlayer;
+        }
+        else if (distanceBetweenPlayer > distanceBetweenTarget && distanceBetweenAgent > agent1DistanceThreshold){
+            currentState = State.ChaseTarget;
+        }
+        else{
+            currentState = State.Flee;
         }
     }
 }
